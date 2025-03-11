@@ -1,7 +1,10 @@
 import axios from "axios";
 import { auth } from "../firebaseConfig.js";
 
-const API_URL = "https://smarttodooo.onrender.com/tasks";
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://smarttodooo.onrender.com/tasks"
+    : "http://localhost:5000/tasks";
 
 const getAuthToken = async () => {
   return new Promise((resolve, reject) => {
@@ -23,7 +26,7 @@ const getAuthToken = async () => {
   });
 };
 
-const apiRequest = async (method, url, data = null) => {
+const apiRequest = async (method, url, data = undefined) => {
   try {
     const token = await getAuthToken();
     if (!token) throw new Error("❌ No authentication token available");
@@ -31,11 +34,17 @@ const apiRequest = async (method, url, data = null) => {
     const config = {
       method,
       url: `${API_URL}${url}`,
-      headers: { Authorization: `Bearer ${token}` },
-      data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     };
 
+    if (data) config.data = data;
+
+    console.log(`📡 Sending ${method} request to:`, config.url);
     const response = await axios(config);
+    console.log(`✅ API response (${method} ${url}):`, response.data);
     return response.data;
   } catch (error) {
     console.error(
