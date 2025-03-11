@@ -1,7 +1,7 @@
 import axios from "axios";
 import { auth } from "../firebaseConfig.js";
 
-const API_URL = "http://localhost:5000/tasks";
+const API_URL = "https://smarttodooo.onrender.com/tasks"; // ✅ Update this
 
 const getAuthToken = async () => {
   return new Promise((resolve, reject) => {

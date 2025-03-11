@@ -7,11 +7,23 @@ const userRoutes = require("./routes/users");
 
 const app = express();
 
-// ✅ Secure CORS - Allow frontend URL
-const allowedOrigins = [process.env.CLIENT_URL || "http://localhost:3000"];
+// ✅ Allow Frontend (Local & Deployed)
+const allowedOrigins = [
+  process.env.CLIENT_URL || "http://localhost:3000", // Local frontend
+  "https://smarttodooo.onrender.com", // Deployed frontend (Make sure this matches your actual frontend URL)
+];
+
+console.log("✅ Allowed Origins:", allowedOrigins); // Debugging
+
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS policy error: Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
