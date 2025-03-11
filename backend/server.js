@@ -7,10 +7,10 @@ const userRoutes = require("./routes/users");
 
 const app = express();
 
-// ✅ Allow Frontend (Local & Deployed)
+// ✅ Allow Frontend URLs (Local & Firebase)
 const allowedOrigins = [
-  process.env.CLIENT_URL || "http://localhost:3000", // Local frontend
-  "https://smarttodooo.onrender.com", // Deployed frontend (Make sure this matches your actual frontend URL)
+  "http://localhost:3000", // Local Dev
+  "https://smarttodooo.web.app", // Firebase Deployed Frontend
 ];
 
 console.log("✅ Allowed Origins:", allowedOrigins); // Debugging
@@ -21,6 +21,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.error("❌ CORS error: Origin not allowed -", origin);
         callback(new Error("CORS policy error: Not allowed by CORS"));
       }
     },
