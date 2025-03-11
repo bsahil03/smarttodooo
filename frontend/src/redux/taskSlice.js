@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { addTask, getTasks, updateTask, deleteTask } from "../services/api.js";
 
+// ✅ Fetch tasks from API
 export const fetchTasks = createAsyncThunk(
   "tasks/fetchTasks",
   async (_, { getState }) => {
@@ -14,16 +15,20 @@ const taskSlice = createSlice({
   name: "tasks",
   initialState: { tasks: [], loading: false },
   reducers: {
+    // ✅ Add a task locally
     addTaskLocal: (state, action) => {
       state.tasks.push(action.payload);
     },
+    // ✅ Remove a task locally
     removeTaskLocal: (state, action) => {
       state.tasks = state.tasks.filter((task) => task._id !== action.payload);
     },
+    // ✅ Toggle completion status
     toggleTaskCompleteLocal: (state, action) => {
       const task = state.tasks.find((task) => task._id === action.payload);
       if (task) task.completed = !task.completed;
     },
+    // ✅ Update task locally
     updateTaskLocal: (state, action) => {
       const { taskId, updatedData } = action.payload;
       const task = state.tasks.find((task) => task._id === taskId);

@@ -8,12 +8,9 @@ const userRoutes = require("./routes/users");
 const app = express();
 
 // ✅ Allow Frontend URLs (Local & Firebase)
-const allowedOrigins = [
-  "http://localhost:3000", // Local Dev
-  "https://smarttodooo.web.app", // Firebase Deployed Frontend
-];
+const allowedOrigins = ["http://localhost:3000", "https://smarttodooo.web.app"];
 
-console.log("✅ Allowed Origins:", allowedOrigins); // Debugging
+console.log("✅ Allowed Origins:", allowedOrigins);
 
 app.use(
   cors({
@@ -26,6 +23,8 @@ app.use(
       }
     },
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 

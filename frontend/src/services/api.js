@@ -1,7 +1,7 @@
 import axios from "axios";
 import { auth } from "../firebaseConfig.js";
 
-const API_URL = "https://smarttodooo.onrender.com/tasks"; // ✅ Update this
+const API_URL = "https://smarttodooo.onrender.com/tasks";
 
 const getAuthToken = async () => {
   return new Promise((resolve, reject) => {
@@ -12,11 +12,11 @@ const getAuthToken = async () => {
           const token = await user.getIdToken();
           resolve(token);
         } catch (error) {
-          console.error("Error getting auth token:", error);
+          console.error("❌ Error getting auth token:", error);
           reject(null);
         }
       } else {
-        console.warn("User not authenticated");
+        console.warn("⚠️ User not authenticated");
         reject(null);
       }
     });
@@ -26,7 +26,7 @@ const getAuthToken = async () => {
 const apiRequest = async (method, url, data = null) => {
   try {
     const token = await getAuthToken();
-    if (!token) throw new Error("No authentication token available");
+    if (!token) throw new Error("❌ No authentication token available");
 
     const config = {
       method,
@@ -39,7 +39,7 @@ const apiRequest = async (method, url, data = null) => {
     return response.data;
   } catch (error) {
     console.error(
-      `API request failed (${method} ${url}):`,
+      `❌ API request failed (${method} ${url}):`,
       error.response?.data || error
     );
     throw error;
