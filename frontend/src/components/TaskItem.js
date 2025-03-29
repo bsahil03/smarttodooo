@@ -188,14 +188,15 @@ const saveUpdate = async () => {
               className={`flex-grow-1 ${
                 task.completed ? "text-decoration-line-through text-muted" : ""
               }`}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", color: "black" }}
               onClick={toggleComplete}
             >
               {task.title}
               <span
                 className={`badge ms-2 priority-${task.priority.toLowerCase()}`}
+                style={{ color: "black" }}
               >
-                ({task.priority}) {/* Added square brackets here */}
+                ({task.priority})
               </span>
             </span>
           )}
