@@ -184,7 +184,7 @@ const saveUpdate = async () => {
               </select>
             </div>
           ) : (
-            <span
+             <span
               className={`flex-grow-1 ${
                 task.completed ? "text-decoration-line-through text-muted" : ""
               }`}
@@ -195,7 +195,7 @@ const saveUpdate = async () => {
               <span
                 className={`badge ms-2 priority-${task.priority.toLowerCase()}`}
               >
-                {task.priority}
+                ({task.priority}) {/* Added square brackets here */}
               </span>
             </span>
           )}
