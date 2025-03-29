@@ -15,23 +15,36 @@ const TaskForm = ({ userId }) => {
     e.preventDefault();
     const auth = getAuth();
     const user = auth.currentUser;
-
+  
     if (!user) {
-      console.error("User not authenticated");
+      alert("Please sign in to add tasks");
       return;
     }
-
+  
     try {
       const token = await user.getIdToken();
-      const newTask = { userId, title, priority, completed: false };
+      const newTask = { 
+        userId: user.uid, 
+        title: title.trim(), 
+        priority, 
+        completed: false 
+      };
+      
       const addedTask = await addTask(newTask, token);
       dispatch(addTaskLocal(addedTask));
       setTitle("");
     } catch (error) {
-      console.error(
-        "Error adding task:",
-        error.response ? error.response.data : error
-      );
+      console.error("Full error:", error);
+      
+      // Extract backend error message if available
+      const backendMessage = error.response?.data?.error || 
+                           error.response?.data?.message;
+      
+      const errorMessage = backendMessage || 
+                          error.message || 
+                          "Failed to add task. Please try again.";
+      
+      alert(errorMessage);
     }
   };
 

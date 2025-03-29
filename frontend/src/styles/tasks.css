@@ -15,8 +15,11 @@
   justify-content: space-between;
   color: black;
 }
-
+.modal-body,.modal-header{
+  color: black;
+}
 .taskavailable,
 .loadingtask {
   color: black;
 }
+
